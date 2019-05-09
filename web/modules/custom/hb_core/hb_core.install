@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * Module installation file.
+ */
+
+use Drupal\consumers\Entity\Consumer;
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_install().
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function hb_core_install() {
+  // Create user entity.
+  $user = _hb_core_create_user('nuxt');
+
+    // Create consumer entity.
+  _hb_core_create_consumer('nuxt', $user);
+}
+
+/**
+ * Create a user entity.
+ *
+ * @param $id
+ *   The client ID.
+ *
+ * @return \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function _hb_core_create_user($id) {
+  // Create user entity.
+  $user = User::create([
+    'name'   => $id,
+    // @TODO: Use environment variable or randomize password.
+    'pass'   => 'password',
+    'status' => TRUE,
+  ]);
+
+  // Add 'client_developer' role.
+  $user->addRole('client_developer');
+
+  // Save the user.
+  $user->save();
+
+  return $user;
+}
+
+/**
+ * Create a consumer entity.
+ *
+ * @param $id
+ *   The client ID.
+ * @param \Drupal\user\Entity\User $user
+ *   The client User entity.
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function _hb_core_create_consumer($id, User $user) {
+  // Create consumer client.
+  $consumer = Consumer::create([
+    'owner_id'     => 1,
+    'uuid'         => getenv('OAUTH_CLIENT_ID'),
+    'label'        => $id,
+    'user_id'      => $user->id(),
+    'secret'       => getenv('OAUTH_CLIENT_SECRET'),
+    'confidential' => TRUE,
+    'image_styles' => [],
+    'roles'        => [['target_id' => 'client_developer']],
+  ]);
+  $consumer->save();
+}

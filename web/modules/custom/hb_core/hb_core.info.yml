@@ -1,0 +1,9 @@
+name: Headless Blog - Core
+description: Core functionality of the Headless Blog demo.
+package: Headless Blog
+
+type: module
+core: 8.x
+
+dependencies:
+  - consumers:consumers
