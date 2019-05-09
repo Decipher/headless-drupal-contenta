@@ -280,7 +280,7 @@ $config_directories = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = 'bGDoMhwrtDHNcr0NHlt-K6yGZTSuMoQ9xUOtQGedGD2sekh2GrXPdVgcRdosAZunXJP3S6Q6hg';
 
 /**
  * Deployment identifier.
@@ -777,3 +777,15 @@ $settings['entity_update_backup'] = TRUE;
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
+
+$databases['default']['default'] = [
+  'database' => getenv('MYSQL_DATABASE'),
+  'driver' => 'mysql',
+  'host' => getenv('MYSQL_HOSTNAME'),
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'password' => getenv('MYSQL_PASSWORD'),
+  'port' => getenv('MYSQL_PORT'),
+  'prefix' => '',
+  'username' => getenv('MYSQL_USER'),
+];
+$config_directories['sync'] = '../config/sync';
