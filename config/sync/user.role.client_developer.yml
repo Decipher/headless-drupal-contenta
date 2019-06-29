@@ -9,5 +9,7 @@ is_admin: null
 permissions:
   - 'access openapi api docs'
   - 'access user profiles'
+  - 'administer node fields'
   - 'administer simple_oauth entities'
+  - 'administer user form display'
   - 'grant simple_oauth codes'

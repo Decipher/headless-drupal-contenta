@@ -12,5 +12,5 @@ permissions:
   - 'access toolbar'
   - 'execute graphql requests'
   - 'issue subrequests'
-  - 'view media'
   - 'use jsonrpc services'
+  - 'view media'
