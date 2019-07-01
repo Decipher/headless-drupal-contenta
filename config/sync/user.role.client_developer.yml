@@ -12,4 +12,7 @@ permissions:
   - 'administer node fields'
   - 'administer simple_oauth entities'
   - 'administer user form display'
+  - 'create blog content'
+  - 'delete any blog content'
+  - 'edit any blog content'
   - 'grant simple_oauth codes'
