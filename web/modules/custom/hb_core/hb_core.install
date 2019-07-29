@@ -15,28 +15,29 @@ use Drupal\user\Entity\User;
  */
 function hb_core_install() {
   // Create user entity.
-  $user = _hb_core_create_user('nuxt');
+  $user = _hb_core_create_user(getenv('OAUTH_USERNAME'), getenv('OAUTH_PASSWORD'));
 
     // Create consumer entity.
-  _hb_core_create_consumer('nuxt', $user);
+  _hb_core_create_consumer($user);
 }
 
 /**
  * Create a user entity.
  *
- * @param $id
- *   The client ID.
+ * @param string $username
+ *   The client username.
+ * @param string $password
+ *   The client password
  *
  * @return \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
  *
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function _hb_core_create_user($id) {
+function _hb_core_create_user($username, $password) {
   // Create user entity.
   $user = User::create([
-    'name'   => $id,
-    // @TODO: Use environment variable or randomize password.
-    'pass'   => 'password',
+    'name'   => $username,
+    'pass'   => $password,
     'status' => TRUE,
   ]);
 
@@ -52,19 +53,17 @@ function _hb_core_create_user($id) {
 /**
  * Create a consumer entity.
  *
- * @param $id
- *   The client ID.
  * @param \Drupal\user\Entity\User $user
  *   The client User entity.
  *
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function _hb_core_create_consumer($id, User $user) {
+function _hb_core_create_consumer(User $user) {
   // Create consumer client.
   $consumer = Consumer::create([
     'owner_id'     => 1,
     'uuid'         => getenv('OAUTH_CLIENT_ID'),
-    'label'        => $id,
+    'label'        => $user->id(),
     'user_id'      => $user->id(),
     'secret'       => getenv('OAUTH_CLIENT_SECRET'),
     'confidential' => TRUE,
