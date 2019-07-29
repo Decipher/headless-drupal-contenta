@@ -9,9 +9,9 @@ is_admin: null
 permissions:
   - 'access openapi api docs'
   - 'access user profiles'
+  - 'administer display modes'
   - 'administer node fields'
   - 'administer simple_oauth entities'
-  - 'administer user form display'
   - 'create blog content'
   - 'delete any blog content'
   - 'edit any blog content'
